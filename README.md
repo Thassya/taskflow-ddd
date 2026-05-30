@@ -17,6 +17,7 @@ O sistema permite gerenciar projetos e tarefas, incluindo:
 
 ## Estrutura da solução
 
+```text
 TaskFlow
 |
 |-- src
@@ -30,6 +31,7 @@ TaskFlow
 |
 |-- TaskFlow.sln
 |-- README.md
+```
 
 ## Projetos da solução
 
