@@ -2,7 +2,7 @@ using System;
 
 namespace TaskFlow.Domain.Projects
 {
-    public class ProjetoFactory
+    public class ProjetoFactory : IProjetoFactory
     {
         public Projeto Criar(string nomeProjeto, Guid usuarioResponsavelId, string nomeResponsavel)
         {

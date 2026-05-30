@@ -10,7 +10,7 @@ namespace TaskFlow.Application.Tarefas
     public class TarefaApplicationService
     {
         private readonly ITarefaRepository _tarefaRepository;
-        private readonly TarefaFactory _tarefaFactory;
+        private readonly ITarefaFactory _tarefaFactory;
         private readonly IProjetoAcl _projetoAcl;
         private readonly AlocacaoTarefaService _alocacaoTarefaService;
         private readonly ConclusaoTarefaService _conclusaoTarefaService;
@@ -18,7 +18,7 @@ namespace TaskFlow.Application.Tarefas
 
         public TarefaApplicationService(
             ITarefaRepository tarefaRepository,
-            TarefaFactory tarefaFactory,
+            ITarefaFactory tarefaFactory,
             IProjetoAcl projetoAcl,
             AlocacaoTarefaService alocacaoTarefaService,
             ConclusaoTarefaService conclusaoTarefaService,
