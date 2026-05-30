@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TaskFlow.Application.Projetos;
 using TaskFlow.Application.Tarefas;
 using TaskFlow.Domain.Acl;
 using TaskFlow.Domain.Projects;
@@ -23,23 +24,26 @@ namespace TaskFlow.ConsoleApp
                 var projetoRepository = new InMemoryProjetoRepository();
                 var tarefaRepository = new InMemoryTarefaRepository();
 
-                var projetoFactory = new ProjetoFactory();
-                var tarefaFactory = new TarefaFactory();
+                IProjetoFactory projetoFactory = new ProjetoFactory();
+                ITarefaFactory tarefaFactory = new TarefaFactory();
+
+                var projetoApplicationService = new ProjetoApplicationService(
+                    projetoRepository,
+                    projetoFactory);
 
                 var usuarioGestorId = Guid.NewGuid();
                 var usuarioMembroId = Guid.NewGuid();
 
-                var projeto = projetoFactory.Criar(
+                var projeto = projetoApplicationService.CriarProjeto(
                     "Projeto TaskFlow",
                     usuarioGestorId,
                     "Gestor do Projeto");
 
-                projeto.AdicionarMembro(
+                projetoApplicationService.AdicionarMembro(
+                    projeto.Id,
                     usuarioMembroId,
                     "Membro da Equipe",
                     false);
-
-                projetoRepository.Adicionar(projeto);
 
                 IProjetoAcl projetoAcl = new ProjetoAclAdapter(projetoRepository);
 
@@ -48,7 +52,8 @@ namespace TaskFlow.ConsoleApp
                 var regrasConclusao = new List<IRegraConclusaoTarefa>
                 {
                     new RegraTarefaNaoConcluida(),
-                    new RegraTarefaComResponsavel()
+                    new RegraTarefaComResponsavel(),
+                    new RegraTarefaEmAndamento()
                 };
 
                 var conclusaoTarefaService = new ConclusaoTarefaService(regrasConclusao);
@@ -108,8 +113,7 @@ namespace TaskFlow.ConsoleApp
                 Console.WriteLine();
                 Console.WriteLine("Trying to create a task in an archived project...");
 
-                projeto.Arquivar();
-                projetoRepository.Atualizar(projeto);
+                projetoApplicationService.ArquivarProjeto(projeto.Id);
 
                 try
                 {

@@ -2,7 +2,7 @@ using System;
 
 namespace TaskFlow.Domain.Tasks
 {
-    public class TarefaFactory
+    public class TarefaFactory : ITarefaFactory
     {
         public Tarefa Criar(
             Guid projetoId,
